@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model CreateNoteModel
+<div class="text-center">
+    <h1 class="display-4">Your notes</h1>
+    @foreach (Note note in (List<Note>)ViewData["notes"])
+    {
+        <form asp-controller="Notes" asp-action="Delete" method="post" asp-route-id="@note.Id">
+            @note.Text - @note.Theme - @note.Date <button type="submit"> Delete </button>
+        </form>
+    }
+    <form asp-controller="Notes" asp-action="Create" method="post">
+        <p>
+            <label>Theme</label><br />
+            <input type="text" asp-for="Theme" />
+        </p>
+        <span asp-validation-for="Theme"></span>
+        <p>
+            <label>Text:</label><br />
+            <input type="text" asp-for="Text">
+
+        </p>
+        <span asp-validation-for="Text"></span>
+        <p>
+            <button type="submit">Add</button>
+        </p>
+    </form>
+</div>
