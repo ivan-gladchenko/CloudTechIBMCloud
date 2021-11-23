@@ -14,6 +14,7 @@ namespace Lab2.Controllers
         public NotesController(NotesDbContext dbContext)
         {
             this._dbContext = dbContext;
+            _dbContext.LazyLoad();
         }
 
         public IActionResult Notes()
@@ -41,6 +42,23 @@ namespace Lab2.Controllers
             _dbContext.Notes.Remove(note);
             _dbContext.SaveChanges();
             return Redirect("/Notes/Notes");
+        }
+
+        public IActionResult GetOrders(string city = "kyiv")
+        {
+            if (_dbContext.Order.FirstOrDefault() == null)
+            {
+                _dbContext.GenerateData();
+            }
+            var orders = _dbContext.Order.ToList().FindAll(obj => obj.Customer.CustTown == city);
+            ViewBag.Orders = orders;
+            ViewBag.City = city;
+            return View("Orders");
+        }
+        [HttpPost]
+        public IActionResult GetOrdersPost([FromForm] string city)
+        {
+            return GetOrders(city);
         }
     }
 }

@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Lab2.Models.Lab7
+
+<div class="text-center">
+    <h1 class="display-4">Orders</h1>
+    <form asp-controller="Notes" asp-action="GetOrdersPost" method="post">
+        <input value="@ViewBag.City" name="city"/> <button type="submit">Filter</button>
+    </form>
+    <p>OrderId|CustomerId|Date|Executed|Paid|Customer Name</p>
+    @foreach (Lab2.Models.Lab7.Order order in (List<Lab2.Models.Lab7.Order>)ViewBag.Orders)
+    {
+        <p> @order.Id @order.CustomerId @order.Date @order.Executed @order.Paid  @order.Customer.CustName</p>
+    }
+
+</div>

@@ -25,7 +25,7 @@ namespace Lab2
         {
             services.AddControllersWithViews();
             var connectionString = Configuration.GetValue<string>("DbConnection");
-            services.AddDbContext<NotesDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<NotesDbContext>(options => options.UseSqlite(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
